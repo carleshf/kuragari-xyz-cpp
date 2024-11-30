@@ -1,0 +1,21 @@
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/mongo/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  api:
+    build:
+      context: ./api
+    container_name: cpp_api
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mongodb
